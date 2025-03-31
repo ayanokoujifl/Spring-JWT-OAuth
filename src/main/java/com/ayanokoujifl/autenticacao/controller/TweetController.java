@@ -42,7 +42,8 @@ public class TweetController {
 		var user = userRepository.findById(UUID.fromString(token.getName()));
 		var tweet = tweetRepository.findById(tweetId);
 
-		var isAdmin = user.get().getRoles().stream().anyMatch(role -> role.getName().equals(Role.Values.ADMIN.name()));
+		boolean isAdmin = user.get().getRoles().stream()
+				.anyMatch(role -> role.getName().equals(Role.Values.ADMIN.name().toLowerCase()));
 
 		if (isAdmin || tweet.get().getUser().getId().equals(UUID.fromString(token.getName()))) {
 			tweetRepository.delete(tweet.get());
