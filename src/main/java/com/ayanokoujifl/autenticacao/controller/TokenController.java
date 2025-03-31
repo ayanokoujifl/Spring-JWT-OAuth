@@ -46,7 +46,7 @@ public class TokenController {
 
 		var scopes = user.get().getRoles().stream().map(Role::getName).collect(Collectors.joining(" "));
 
-		var claims = JwtClaimsSet.builder().issuer("jwtAuth").issuedAt(now).subject(user.get().getUsername().toString())
+		var claims = JwtClaimsSet.builder().issuer("jwtAuth").issuedAt(now).subject(user.get().getId().toString())
 				.expiresAt(now.plusSeconds(expiresIn)).claim("scope", scopes).build();
 
 		var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
